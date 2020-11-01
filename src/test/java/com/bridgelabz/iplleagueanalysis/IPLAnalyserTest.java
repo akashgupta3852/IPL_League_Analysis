@@ -13,6 +13,8 @@ public class IPLAnalyserTest {
 	private static final String MOST_WICKETS_CSV_FILE_WITHOUT_HEADER = "C:\\Users\\Akash Gupta\\Downloads\\Most_Wickets_Csv_File_Without_Header.csv";
 	private static final String WRONG_DELIMITER_IN_MOST_RUNS_CSV_FILE = "C:\\Users\\Akash Gupta\\Downloads\\Most_Runs_Csv_File_With_Wrong_Delimeter.csv";
 	private static final String MOST_RUNS_CSV_FILE_WITHOUT_HEADER = "C:\\Users\\Akash Gupta\\Downloads\\Most_Runs_Csv_File_Without_Header.csv";
+	private static final String INCORRECT_TYPE_MOST_WICKETS_CSV_FILE = "C:\\Users\\Akash Gupta\\eclipse-workspace\\IPLLeagueAnalysis\\WP DP Data_02 IPL2019FactsheetMostWkts.txt";
+	private static final String INCORRECT_TYPE_MOST_RUNS_CSV_FILE = "C:\\Users\\Akash Gupta\\eclipse-workspace\\IPLLeagueAnalysis\\WP DP Data_01 IPL2019FactsheetMostRuns.txt";
 	private IPLAnalyser iplAnalyser;
 
 	@Before
@@ -56,6 +58,15 @@ public class IPLAnalyserTest {
 			Assert.assertEquals("UNABLE_TO_PARSE", e.exceptionType);
 		}
 	}
+	
+	@Test
+	public void givenBowlingCSVFile_WithWrongFileType_ShouldThrowException() {
+		try {
+			iplAnalyser.loadBowlingData(INCORRECT_TYPE_MOST_WICKETS_CSV_FILE);
+		} catch (IPLAnalyserException e) {
+			Assert.assertEquals(IPLAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
+		}
+	}
 
 	@Test
 	public void givenBattingCSVFile_ShouldReturnExactCount() {
@@ -91,6 +102,15 @@ public class IPLAnalyserTest {
 			iplAnalyser.loadBattingData(MOST_RUNS_CSV_FILE_WITHOUT_HEADER);
 		} catch (IPLAnalyserException e) {
 			Assert.assertEquals("UNABLE_TO_PARSE", e.exceptionType);
+		}
+	}
+	
+	@Test
+	public void givenBattingCSVFile_WithWrongFileType_ShouldThrowException() {
+		try {
+			iplAnalyser.loadBattingData(INCORRECT_TYPE_MOST_RUNS_CSV_FILE);
+		} catch (IPLAnalyserException e) {
+			Assert.assertEquals(IPLAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
 		}
 	}
 }
