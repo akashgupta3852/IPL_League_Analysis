@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
@@ -172,6 +171,15 @@ public class IPLAnalyser {
 		checkCSVListNullOrEmpty(bowlingCSVList);
 		Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.average);
 		bowlingCSVComparator = bowlingCSVComparator.thenComparing(bowlingCSV -> bowlingCSV.strikeRate);
+		this.descendingOrderSort(bowlingCSVComparator, bowlingCSVList);
+		String sortedJson = new Gson().toJson(bowlingCSVList);
+		return sortedJson;
+	}
+
+	public String getMaxAndAvgWktsWiseSortedBowlingData() throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(bowlingCSVList);
+		Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.wickets);
+		bowlingCSVComparator = bowlingCSVComparator.thenComparing(bowlingCSV -> bowlingCSV.average);
 		this.descendingOrderSort(bowlingCSVComparator, bowlingCSVList);
 		String sortedJson = new Gson().toJson(bowlingCSVList);
 		return sortedJson;
