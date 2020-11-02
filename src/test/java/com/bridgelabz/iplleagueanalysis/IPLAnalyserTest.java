@@ -232,4 +232,17 @@ public class IPLAnalyserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	// UC8 - Getting the top striking rates of the Bowlers
+	@Test
+	public void givenBowlingCSVFile_WhenSortedByStrikingRate_ShouldReturnSortedResult_CheckTopStrikingRate() {
+		try {
+			iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_PATH);
+			String sortedBowlingCSVByStrikeRate = iplAnalyser.getStrikeRateWiseSortedBowlingData();
+			BowlingCSV[] bowlingCSV = new Gson().fromJson(sortedBowlingCSVByStrikeRate, BowlingCSV[].class);
+			Assert.assertEquals(120.0, bowlingCSV[0].strikeRate, 0.0);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
 }
