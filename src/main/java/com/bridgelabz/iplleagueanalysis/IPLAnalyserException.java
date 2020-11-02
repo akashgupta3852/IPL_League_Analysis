@@ -4,7 +4,7 @@ public class IPLAnalyserException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	enum ExceptionType {
-		BATTING_FILE_PROBLEM, BOWLING_FILE_PROBLEM, SOME_FILE_ISSUE,NO_BATTING_DATA
+		BATTING_FILE_PROBLEM, BOWLING_FILE_PROBLEM, SOME_FILE_ISSUE,NO_BATTING_DATA, NO_BOWLING_DATA
 	}
 
 	ExceptionType type;
