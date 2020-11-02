@@ -216,6 +216,18 @@ public class IPLAnalyser {
 		return sortedJson;
 	}
 
+	public String getZero100s50sAndAvgWiseSortedData() throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(battingCSVList);
+		List<BattingCSV> batsmanListHavingZero100sAnd50s = new ArrayList<BattingCSV>();
+		for (BattingCSV battingCSV : battingCSVList) {
+			if (battingCSV.hundreds == 0 && battingCSV.fiftys == 0)
+				batsmanListHavingZero100sAnd50s.add(battingCSV);
+		}
+		getListSortedByAvgRunsOrWkts(batsmanListHavingZero100sAnd50s);
+		String sortedJson = new Gson().toJson(batsmanListHavingZero100sAnd50s);
+		return sortedJson;
+	}
+
 	private void getListSortedByAvgRunsOrWkts(List csvList) throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(csvList);
 		if (csvList == bowlingCSVList) {
