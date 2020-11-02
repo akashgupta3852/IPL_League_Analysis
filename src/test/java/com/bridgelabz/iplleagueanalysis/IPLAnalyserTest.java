@@ -200,7 +200,7 @@ public class IPLAnalyserTest {
 	public void givenBattingCSVFile_WhenSortedByAvgAndSR_ShouldReturnSortedResult_CheckTopBatsman() {
 		try {
 			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
-			String sortedBattingCSVByAvgAndSR = iplAnalyser.getAvgAndStrikeRateWiseSortedData();
+			String sortedBattingCSVByAvgAndSR = iplAnalyser.getAvgRunsAndStrikeRateWiseSortedData();
 			BattingCSV[] battingCSV = new Gson().fromJson(sortedBattingCSVByAvgAndSR, BattingCSV[].class);
 			Assert.assertEquals("MS Dhoni", battingCSV[0].player);
 		} catch (IPLAnalyserException e) {
@@ -265,9 +265,23 @@ public class IPLAnalyserTest {
 	public void givenBowlingCSVFile_WhenSortedByStrikingRateWith4wAnd5w_ShouldReturnSortedResult_CheckTopBowler() {
 		try {
 			iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_PATH);
-			String sortedBowlingCSVByStrikeRateWith4wAnd5w = iplAnalyser.getStrikeRateWith4wAnd5wWiseSortedBowlingData();
+			String sortedBowlingCSVByStrikeRateWith4wAnd5w = iplAnalyser
+					.getStrikeRateWith4wAnd5wWiseSortedBowlingData();
 			BowlingCSV[] bowlingCSV = new Gson().fromJson(sortedBowlingCSVByStrikeRateWith4wAnd5w, BowlingCSV[].class);
 			Assert.assertEquals("Mohammad Nabi", bowlingCSV[0].player);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// UC11 - Getting the Bowler who had the great bowling averages with the best striking rate
+	@Test
+	public void givenBowlingCSVFile_WhenSortedByAvgWktsAndStrikeRates_ShouldReturnSortedResult_CheckTopBowler() {
+		try {
+			iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_PATH);
+			String sortedBowlingCSVByAvgWktsAndSR = iplAnalyser.getAvgWktsAndSRWiseSortedBowlingData();
+			BowlingCSV[] bowlingCSV = new Gson().fromJson(sortedBowlingCSVByAvgWktsAndSR, BowlingCSV[].class);
+			Assert.assertEquals("Krishnappa Gowtham", bowlingCSV[0].player);
 		} catch (IPLAnalyserException e) {
 			e.printStackTrace();
 		}
