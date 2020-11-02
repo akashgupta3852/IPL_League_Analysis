@@ -198,7 +198,7 @@ public class IPLAnalyserTest {
 
 	// UC5 - Getting the Cricketer who had great averages with the best striking rates
 	@Test
-	public void givenMostRunCsvFile_whenSortedByAvgAndSR_shouldReturnTopBatsman() {
+	public void givenMostRunCsvFile_WhenSortedByAvgWithSR_ShouldReturnSortedResult_CheckTopBatsman() {
 		try {
 			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
 			String sortedBatRunsByAvgWithSR = iplAnalyser.getAvgWithStrikeRateWiseSortedData();
@@ -208,4 +208,17 @@ public class IPLAnalyserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	// UC6 - Getting the Cricketer who hit maximum runs with the best averages
+    @Test
+    public void givenMostRunCsvFile_WhenSortedByRunsWithAvg_ShouldReturnSortedResult_CheckTopBatsman() {
+        try {
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
+            String sortedBatRunsByRunsWithAvg = iplAnalyser.getRunsWithAvgWiseSortedData();
+            BattingCSV[] battingCSV = new Gson().fromJson(sortedBatRunsByRunsWithAvg, BattingCSV[].class);
+            Assert.assertEquals("David Warner ", battingCSV[0].player);
+        } catch (IPLAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
