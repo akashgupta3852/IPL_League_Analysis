@@ -161,9 +161,22 @@ public class IPLAnalyserTest {
 	public void givenBattingCSVFile_WhenSortedBySixes_ShouldReturnSortedResult_CheckTopBatsman() {
 		try {
 			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
-			String sortedMostRunByNumOfSix = iplAnalyser.getSixesWiseSortedData();
-			BattingCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByNumOfSix, BattingCSV[].class);
-			Assert.assertEquals("Andre Russell", mostRunsCSV[0].player);
+			String sortedBattingRunsByNumOfSixes = iplAnalyser.getSixesWiseSortedData();
+			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunsByNumOfSixes, BattingCSV[].class);
+			Assert.assertEquals("Andre Russell", battingRunsCSV[0].player);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// UC3.2 - Getting the the Cricketer who hits maximum 4s
+	@Test
+	public void givenBattingCSVFile_WhenSortedByFours_ShouldReturnSortedResult_CheckTopBatsman() {
+		try {
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
+			String sortedBattingRunsByNumOfFours = iplAnalyser.getFoursWiseSortedData();
+			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunsByNumOfFours, BattingCSV[].class);
+			Assert.assertEquals("Shikhar Dhawan", battingRunsCSV[0].player);
 		} catch (IPLAnalyserException e) {
 			e.printStackTrace();
 		}
