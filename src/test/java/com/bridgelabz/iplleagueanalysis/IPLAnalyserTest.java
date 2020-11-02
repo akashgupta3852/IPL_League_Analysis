@@ -299,4 +299,17 @@ public class IPLAnalyserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	// UC13 - Getting the player who had the best batting and bowling averages
+	@Test
+	public void givenBattingAndBowlingCSVFile_WhenRetrievedBestAverage_ShouldMatch() {
+		try {
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
+			iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_PATH);
+			String playerWithBestAverage = iplAnalyser.getPlayerWithBestAverage();
+			Assert.assertEquals("Andre Russell", playerWithBestAverage);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
 }
