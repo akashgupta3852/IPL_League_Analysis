@@ -313,7 +313,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
-	// UC14 Getting the player who is the best all rounder
+	// UC14 - Getting the player who is the best all rounder
 	@Test
 	public void givenBattingAndBowlingCSVFile_WhenRetrieved_ShouldReturnAllRounderPlayer() {
 		try {
@@ -321,6 +321,19 @@ public class IPLAnalyserTest {
 			iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_PATH);
 			String allRounderPlayer = iplAnalyser.getPlayerHavingMostRunsAndMostWkts();
 			Assert.assertEquals("Andre Russell", allRounderPlayer);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//UC15 - Getting the player who hit maximum hundreds and had best batting average
+	@Test
+	public void givenBattingCSVFile_WhenSortedByHundredsAndAvgRuns_ShouldReturnSortedResult_CheckTopBatsman() {
+		try {
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
+			String sortedBattingCSVByHundredsAndAvgRuns = iplAnalyser.getHundredsAndAvgRunsWiseSortedData();
+			BattingCSV[] battingCSV = new Gson().fromJson(sortedBattingCSVByHundredsAndAvgRuns, BattingCSV[].class);
+			Assert.assertEquals("David Warner ", battingCSV[0].player);
 		} catch (IPLAnalyserException e) {
 			e.printStackTrace();
 		}
