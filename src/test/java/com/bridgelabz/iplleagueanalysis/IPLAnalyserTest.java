@@ -187,8 +187,9 @@ public class IPLAnalyserTest {
 	public void givenBattingCSVFile_WhenSortedByStrikeRateWithFoursAndSixes_ShouldReturnSortedResult_CheckTopBatsman() {
 		try {
 			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
-			List<BattingCSV> sortedBatsmanDataOBySRWith4sAnd6s = iplAnalyser.getStrikeRateWith4sAnd6sWiseSortedData();
-			Assert.assertEquals("Andre Russell", sortedBatsmanDataOBySRWith4sAnd6s.get(0).player);
+			String sortedBatsmanDataOBySRWith4sAnd6s = iplAnalyser.getStrikeRateWith4sAnd6sWiseSortedData();
+			BattingCSV[] battingCSV = new Gson().fromJson(sortedBatsmanDataOBySRWith4sAnd6s, BattingCSV[].class);
+			Assert.assertEquals("Ishant Sharma", battingCSV[0].player);
 		} catch (IPLAnalyserException e) {
 			e.printStackTrace();
 		}

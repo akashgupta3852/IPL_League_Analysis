@@ -100,18 +100,17 @@ public class IPLAnalyser {
 		return sortedJson;
 	}
 
-	public List<BattingCSV> getStrikeRateWith4sAnd6sWiseSortedData() throws IPLAnalyserException {
+	public String getStrikeRateWith4sAnd6sWiseSortedData() throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(battingCSVList);
-		int maxRunsFromAll4sAnd6s = battingCSVList.stream()
-				.map(battingCSV -> (battingCSV.fours * 4) + (battingCSV.sixes * 6)).max(Integer::compare).get();
-		List<BattingCSV> batsmanListOfMaxRunsFromAll4sAnd6s = battingCSVList.stream()
-				.filter(battingCSV -> ((battingCSV.fours * 4) + (battingCSV.sixes * 6)) == maxRunsFromAll4sAnd6s)
-				.collect(Collectors.toList());
-		double MaxStrikeRateWith4sAnd6s = batsmanListOfMaxRunsFromAll4sAnd6s.stream()
-				.map(battingCSV -> battingCSV.strikeRate).max(Double::compare).get();
-		List<BattingCSV> batsmanListOfMaxStrikeWith4sAnd6s = batsmanListOfMaxRunsFromAll4sAnd6s.stream()
-				.filter(battingCSV -> battingCSV.strikeRate == MaxStrikeRateWith4sAnd6s).collect(Collectors.toList());
-		return batsmanListOfMaxStrikeWith4sAnd6s;
+		List<BattingCSV> battingCSVListWith4sAnd6s = new ArrayList<>();
+		for (BattingCSV battingCSV : battingCSVList) {
+			if ((battingCSV.fours != 0 || battingCSV.sixes != 0))
+				battingCSVListWith4sAnd6s.add(battingCSV);
+		}
+		Comparator<BattingCSV> battingCSVComparator = Comparator.comparing(battingCSV -> battingCSV.strikeRate);
+		this.descendingOrderSort(battingCSVComparator, battingCSVListWith4sAnd6s);
+		String sortedJson = new Gson().toJson(battingCSVListWith4sAnd6s);
+		return sortedJson;
 	}
 
 	public String getAvgAndStrikeRateWiseSortedData() throws IPLAnalyserException {
@@ -159,8 +158,8 @@ public class IPLAnalyser {
 	public String getStrikeRateWith4wAnd5wWiseSortedBowlingData() throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(bowlingCSVList);
 		List<BowlingCSV> bowlingCSVListWith4wAnd5w = new ArrayList<>();
-		for(BowlingCSV bowlingCSV:bowlingCSVList) {
-			if((bowlingCSV.fourWickets != 0 || bowlingCSV.fiveWickets != 0))
+		for (BowlingCSV bowlingCSV : bowlingCSVList) {
+			if ((bowlingCSV.fourWickets != 0 || bowlingCSV.fiveWickets != 0))
 				bowlingCSVListWith4wAnd5w.add(bowlingCSV);
 		}
 		Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.strikeRate);
