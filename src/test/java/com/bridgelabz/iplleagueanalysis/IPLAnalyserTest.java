@@ -258,4 +258,17 @@ public class IPLAnalyserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	// UC10 - Getting the Bowler who had the best striking rate with fourWickets and fiveWickets
+	@Test
+	public void givenBowlingCSVFile_WhenSortedByStrikingRateWith4wAnd5w_ShouldReturnSortedResult_CheckTopBowler() {
+		try {
+			iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_PATH);
+			String sortedBowlingCSVByStrikeRateWith4wAnd5w = iplAnalyser.getStrikeRateWith4wAnd5wWiseSortedBowlingData();
+			BowlingCSV[] bowlingCSV = new Gson().fromJson(sortedBowlingCSVByStrikeRateWith4wAnd5w, BowlingCSV[].class);
+			Assert.assertEquals("Mohammad Nabi", bowlingCSV[0].player);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
 }
