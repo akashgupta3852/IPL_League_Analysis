@@ -47,8 +47,7 @@ public class IPLAnalyser {
 
 	public String getAvgRunWiseSortedData() throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(battingCSVList);
-		Comparator<BattingCSV> battingCSVComparator = Comparator.comparing(battingCSV -> battingCSV.avg);
-		this.descendingOrderSort(battingCSVComparator, battingCSVList);
+		getListSortedByAvg(battingCSVList);
 		String sortedJson = new Gson().toJson(battingCSVList);
 		return sortedJson;
 	}
@@ -131,9 +130,7 @@ public class IPLAnalyser {
 	}
 
 	public String getAvgWicketsWiseSortedData() throws IPLAnalyserException {
-		checkCSVListNullOrEmpty(bowlingCSVList);
-		Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.average);
-		this.descendingOrderSort(bowlingCSVComparator, bowlingCSVList);
+		getListSortedByAvg(bowlingCSVList);
 		String sortedJson = new Gson().toJson(bowlingCSVList);
 		return sortedJson;
 	}
@@ -183,5 +180,29 @@ public class IPLAnalyser {
 		this.descendingOrderSort(bowlingCSVComparator, bowlingCSVList);
 		String sortedJson = new Gson().toJson(bowlingCSVList);
 		return sortedJson;
+	}
+
+	public String getPlayerWithBestAverage() throws IPLAnalyserException {
+		getListSortedByAvg(bowlingCSVList);
+		getListSortedByAvg(battingCSVList);
+		for (BattingCSV battingCSV : battingCSVList) {
+			for (BowlingCSV bowlingCSV : bowlingCSVList) {
+				if (battingCSV.player.equals(bowlingCSV.player)) {
+					return battingCSV.player;
+				}
+			}
+		}
+		return "";
+	}
+
+	private void getListSortedByAvg(List csvList) throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(csvList);
+		if (csvList == bowlingCSVList) {
+			Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.average);
+			this.descendingOrderSort(bowlingCSVComparator, csvList);
+		} else {
+			Comparator<BattingCSV> battingCSVComparator = Comparator.comparing(battingCSV -> battingCSV.avg);
+			this.descendingOrderSort(battingCSVComparator, csvList);
+		}
 	}
 }
