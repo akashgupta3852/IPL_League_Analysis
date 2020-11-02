@@ -47,8 +47,8 @@ public class IPLAnalyser {
 
 	public String getAvgRunWiseSortedData() throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(battingCSVList);
-		Comparator<BattingCSV> runDataComparator = Comparator.comparing(battingCSV -> battingCSV.avg);
-		this.descendingOrderSort(runDataComparator, battingCSVList);
+		Comparator<BattingCSV> runsDataComparator = Comparator.comparing(battingCSV -> battingCSV.avg);
+		this.descendingOrderSort(runsDataComparator, battingCSVList);
 		String sortedAvgRunsDataJson = new Gson().toJson(battingCSVList);
 		return sortedAvgRunsDataJson;
 	}
@@ -73,24 +73,24 @@ public class IPLAnalyser {
 
 	public String getStrikeRateWiseSortedData() throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(battingCSVList);
-		Comparator<BattingCSV> runDataComparator = Comparator.comparing(battingCSV -> battingCSV.strikeRate);
-		this.descendingOrderSort(runDataComparator, battingCSVList);
+		Comparator<BattingCSV> runsDataComparator = Comparator.comparing(battingCSV -> battingCSV.strikeRate);
+		this.descendingOrderSort(runsDataComparator, battingCSVList);
 		String sortedAvgRunsDataJson = new Gson().toJson(battingCSVList);
 		return sortedAvgRunsDataJson;
 	}
 
 	public String getSixesWiseSortedData() throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(battingCSVList);
-		Comparator<BattingCSV> runDataComparator = Comparator.comparing(battingCSV -> battingCSV.sixes);
-		this.descendingOrderSort(runDataComparator, battingCSVList);
+		Comparator<BattingCSV> runsDataComparator = Comparator.comparing(battingCSV -> battingCSV.sixes);
+		this.descendingOrderSort(runsDataComparator, battingCSVList);
 		String sortedAvgRunsDataJson = new Gson().toJson(battingCSVList);
 		return sortedAvgRunsDataJson;
 	}
 
 	public String getFoursWiseSortedData() throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(battingCSVList);
-		Comparator<BattingCSV> runDataComparator = Comparator.comparing(battingCSV -> battingCSV.fours);
-		this.descendingOrderSort(runDataComparator, battingCSVList);
+		Comparator<BattingCSV> runsDataComparator = Comparator.comparing(battingCSV -> battingCSV.fours);
+		this.descendingOrderSort(runsDataComparator, battingCSVList);
 		String sortedAvgRunsDataJson = new Gson().toJson(battingCSVList);
 		return sortedAvgRunsDataJson;
 	}
@@ -98,16 +98,23 @@ public class IPLAnalyser {
 	public List<BattingCSV> getStrikeRateWith4sAnd6sWiseSortedData() throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(battingCSVList);
 		int maxRunsFromAll4sAnd6s = battingCSVList.stream()
-				.map(battingRunsData -> (battingRunsData.fours * 4) + (battingRunsData.sixes * 6)).max(Integer::compare)
-				.get();
-		List<BattingCSV> batsmanListOfMaxRunsFromAll4sAnd6s = battingCSVList.stream().filter(
-				battingRunsData -> ((battingRunsData.fours * 4) + (battingRunsData.sixes * 6)) == maxRunsFromAll4sAnd6s)
+				.map(battingCSV -> (battingCSV.fours * 4) + (battingCSV.sixes * 6)).max(Integer::compare).get();
+		List<BattingCSV> batsmanListOfMaxRunsFromAll4sAnd6s = battingCSVList.stream()
+				.filter(battingCSV -> ((battingCSV.fours * 4) + (battingCSV.sixes * 6)) == maxRunsFromAll4sAnd6s)
 				.collect(Collectors.toList());
 		double MaxStrikeRateWith4sAnd6s = batsmanListOfMaxRunsFromAll4sAnd6s.stream()
-				.map(battingRunsData -> battingRunsData.strikeRate).max(Double::compare).get();
+				.map(battingCSV -> battingCSV.strikeRate).max(Double::compare).get();
 		List<BattingCSV> batsmanListOfMaxStrikeWith4sAnd6s = batsmanListOfMaxRunsFromAll4sAnd6s.stream()
-				.filter(battingRunsData -> battingRunsData.strikeRate == MaxStrikeRateWith4sAnd6s)
-				.collect(Collectors.toList());
+				.filter(battingCSV -> battingCSV.strikeRate == MaxStrikeRateWith4sAnd6s).collect(Collectors.toList());
 		return batsmanListOfMaxStrikeWith4sAnd6s;
+	}
+
+	public String getAvgWithStrikeRateWiseSortedData() throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(battingCSVList);
+		Comparator<BattingCSV> runsDataComparator = Comparator.comparing(battingCSV -> battingCSV.avg);
+		runsDataComparator = runsDataComparator.thenComparing(battingCSV -> battingCSV.strikeRate);
+		this.descendingOrderSort(runsDataComparator, battingCSVList);
+		String sortedAvgRunsDataJson = new Gson().toJson(battingCSVList);
+		return sortedAvgRunsDataJson;
 	}
 }
