@@ -7,16 +7,16 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 public class IPLAnalyserTest {
-	private static final String IPL_MOST_WICKETS_CSV_FILE_PATH = "C:\\Users\\Akash Gupta\\Downloads\\WP DP Data_02 IPL2019FactsheetMostWkts.csv";
-	private static final String IPL_MOST_RUNS_CSV_FILE_PATH = "C:\\Users\\Akash Gupta\\Downloads\\WP DP Data_01 IPL2019FactsheetMostRuns.csv";
+	private static final String BOWLING_CSV_FILE_PATH = "C:\\Users\\Akash Gupta\\Downloads\\WP DP Data_02 IPL2019FactsheetMostWkts.csv";
+	private static final String BATTING_CSV_FILE_PATH = "C:\\Users\\Akash Gupta\\Downloads\\WP DP Data_01 IPL2019FactsheetMostRuns.csv";
 	private static final String WRONG_CSV_FILE_PATH_FOR_BOWLING = "C:\\Users\\Akash Gupta\\Download\\WP DP Data_02 IPL2019FactsheetMostWkts.csv";
 	private static final String WRONG_CSV_FILE_PATH_FOR_BATTING = "C:\\Users\\Akash Gupta\\Download\\WP DP Data_01 IPL2019FactsheetMostRuns.csv";
-	private static final String WRONG_DELIMITER_IN_MOST_WICKETS_CSV_FILE = "C:\\Users\\Akash Gupta\\Downloads\\Most_Wickets_Csv_File_With_Wrong_Delimeter.csv";
-	private static final String MOST_WICKETS_CSV_FILE_WITHOUT_HEADER = "C:\\Users\\Akash Gupta\\Downloads\\Most_Wickets_Csv_File_Without_Header.csv";
-	private static final String WRONG_DELIMITER_IN_MOST_RUNS_CSV_FILE = "C:\\Users\\Akash Gupta\\Downloads\\Most_Runs_Csv_File_With_Wrong_Delimeter.csv";
-	private static final String MOST_RUNS_CSV_FILE_WITHOUT_HEADER = "C:\\Users\\Akash Gupta\\Downloads\\Most_Runs_Csv_File_Without_Header.csv";
-	private static final String INCORRECT_TYPE_MOST_WICKETS_CSV_FILE = "C:\\Users\\Akash Gupta\\eclipse-workspace\\IPLLeagueAnalysis\\WP DP Data_02 IPL2019FactsheetMostWkts.txt";
-	private static final String INCORRECT_TYPE_MOST_RUNS_CSV_FILE = "C:\\Users\\Akash Gupta\\eclipse-workspace\\IPLLeagueAnalysis\\WP DP Data_01 IPL2019FactsheetMostRuns.txt";
+	private static final String WRONG_DELIMITER_IN_BOWLING_CSV_FILE = "C:\\Users\\Akash Gupta\\Downloads\\Most_Wickets_Csv_File_With_Wrong_Delimeter.csv";
+	private static final String BOWLING_CSV_FILE_WITHOUT_HEADER = "C:\\Users\\Akash Gupta\\Downloads\\Most_Wickets_Csv_File_Without_Header.csv";
+	private static final String WRONG_DELIMITER_IN_BATTING_CSV_FILE = "C:\\Users\\Akash Gupta\\Downloads\\Most_Runs_Csv_File_With_Wrong_Delimeter.csv";
+	private static final String BATTING_CSV_FILE_WITHOUT_HEADER = "C:\\Users\\Akash Gupta\\Downloads\\Most_Runs_Csv_File_Without_Header.csv";
+	private static final String INCORRECT_TYPE_OF_BOWLING_FILE = "C:\\Users\\Akash Gupta\\eclipse-workspace\\IPLLeagueAnalysis\\WP DP Data_02 IPL2019FactsheetMostWkts.txt";
+	private static final String INCORRECT_TYPE_OF_BATTING_FILE = "C:\\Users\\Akash Gupta\\eclipse-workspace\\IPLLeagueAnalysis\\WP DP Data_01 IPL2019FactsheetMostRuns.txt";
 	private IPLAnalyser iplAnalyser;
 
 	// Initialising the iplAnalyser variable before every test cases
@@ -29,7 +29,7 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenBowlingCSVFile_ShouldReturnExactCount() {
 		try {
-			int playerCount = iplAnalyser.loadBowlingData(IPL_MOST_WICKETS_CSV_FILE_PATH);
+			int playerCount = iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_PATH);
 			Assert.assertEquals(99, playerCount);
 		} catch (IPLAnalyserException e) {
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenBowlingCSVFile_WithIncorrectDelimiter_ShouldThrowException() {
 		try {
-			iplAnalyser.loadBowlingData(WRONG_DELIMITER_IN_MOST_WICKETS_CSV_FILE);
+			iplAnalyser.loadBowlingData(WRONG_DELIMITER_IN_BOWLING_CSV_FILE);
 		} catch (IPLAnalyserException e) {
 			Assert.assertEquals("UNABLE_TO_PARSE", e.exceptionType);
 		}
@@ -61,7 +61,7 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenBowlingCSVFile_WithIncorrectHeader_ShouldThrowException() {
 		try {
-			iplAnalyser.loadBowlingData(MOST_WICKETS_CSV_FILE_WITHOUT_HEADER);
+			iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_WITHOUT_HEADER);
 		} catch (IPLAnalyserException e) {
 			Assert.assertEquals("UNABLE_TO_PARSE", e.exceptionType);
 		}
@@ -71,7 +71,7 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenBowlingCSVFile_WithWrongFileType_ShouldThrowException() {
 		try {
-			iplAnalyser.loadBowlingData(INCORRECT_TYPE_MOST_WICKETS_CSV_FILE);
+			iplAnalyser.loadBowlingData(INCORRECT_TYPE_OF_BOWLING_FILE);
 		} catch (IPLAnalyserException e) {
 			Assert.assertEquals(IPLAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
 		}
@@ -81,7 +81,7 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenBattingCSVFile_ShouldReturnExactCount() {
 		try {
-			int playerCount = iplAnalyser.loadBattingData(IPL_MOST_RUNS_CSV_FILE_PATH);
+			int playerCount = iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
 			Assert.assertEquals(101, playerCount);
 		} catch (IPLAnalyserException e) {
 			e.printStackTrace();
@@ -103,7 +103,7 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenBattingCSVFile_WithIncorrectDelimiter_ShouldThrowException() {
 		try {
-			iplAnalyser.loadBattingData(WRONG_DELIMITER_IN_MOST_RUNS_CSV_FILE);
+			iplAnalyser.loadBattingData(WRONG_DELIMITER_IN_BATTING_CSV_FILE);
 		} catch (IPLAnalyserException e) {
 			Assert.assertEquals("UNABLE_TO_PARSE", e.exceptionType);
 		}
@@ -113,7 +113,7 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenBattingCSVFile_WithIncorrectHeader_ShouldThrowException() {
 		try {
-			iplAnalyser.loadBattingData(MOST_RUNS_CSV_FILE_WITHOUT_HEADER);
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_WITHOUT_HEADER);
 		} catch (IPLAnalyserException e) {
 			Assert.assertEquals("UNABLE_TO_PARSE", e.exceptionType);
 		}
@@ -123,7 +123,7 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenBattingCSVFile_WithWrongFileType_ShouldThrowException() {
 		try {
-			iplAnalyser.loadBattingData(INCORRECT_TYPE_MOST_RUNS_CSV_FILE);
+			iplAnalyser.loadBattingData(INCORRECT_TYPE_OF_BATTING_FILE);
 		} catch (IPLAnalyserException e) {
 			Assert.assertEquals(IPLAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
 		}
@@ -134,7 +134,7 @@ public class IPLAnalyserTest {
 	public void givenBattingCSVFile_WhenSortedByAvg_ShouldReturnSortedResult_CheckTopAvgRun()
 			throws IPLAnalyserException {
 		try {
-			iplAnalyser.loadBattingData(IPL_MOST_RUNS_CSV_FILE_PATH);
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
 			String sortedBattingRunsData = iplAnalyser.getAvgRunWiseSortedData();
 			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunsData, BattingCSV[].class);
 			Assert.assertEquals(83.2, battingRunsCSV[0].avg, 0.00);
@@ -147,7 +147,7 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenBattingCSVFile_WhenSortedByStrikingRate_ShouldReturnSortedResult_CheckTopStrikingRate() {
 		try {
-			iplAnalyser.loadBattingData(IPL_MOST_RUNS_CSV_FILE_PATH);
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
 			String sortedBattingRunByStrikeRate = iplAnalyser.getStrikeRateWiseSortedData();
 			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunByStrikeRate, BattingCSV[].class);
 			Assert.assertEquals(333.33, battingRunsCSV[0].strikeRate, 0.0);
@@ -158,9 +158,9 @@ public class IPLAnalyserTest {
 
 	// UC3.1 - Getting the the Cricketer who hits maximum 6s
 	@Test
-	public void givenMostRunCsvFile_whenSortedBySix_shouldReturnTopBatsman() {
+	public void givenBattingCSVFile_WhenSortedBySixes_ShouldReturnSortedResult_CheckTopBatsman() {
 		try {
-			iplAnalyser.loadBattingData(IPL_MOST_RUNS_CSV_FILE_PATH);
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
 			String sortedMostRunByNumOfSix = iplAnalyser.getSixesWiseSortedData();
 			BattingCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByNumOfSix, BattingCSV[].class);
 			Assert.assertEquals("Andre Russell", mostRunsCSV[0].player);
