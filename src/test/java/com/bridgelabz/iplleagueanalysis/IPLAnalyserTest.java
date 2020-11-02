@@ -338,4 +338,17 @@ public class IPLAnalyserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	//UC16 - Getting the player who hit zero 100s and 50s but had best batting averages
+	@Test
+	public void givenBattingCSVFile_WhenSortedByZero100sZeo50sAndBattingAvg_ShouldReturnSortedResult_CheckTopBatsman() {
+		try {
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
+			String sortedBattingCSVByZero100sZero50sAndAvg = iplAnalyser.getZero100s50sAndAvgWiseSortedData();
+			BattingCSV[] battingCSV = new Gson().fromJson(sortedBattingCSVByZero100sZero50sAndAvg, BattingCSV[].class);
+			Assert.assertEquals("Marcus Stoinis", battingCSV[0].player);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
 }
