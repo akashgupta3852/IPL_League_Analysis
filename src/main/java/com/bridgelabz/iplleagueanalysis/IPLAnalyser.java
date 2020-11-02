@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
@@ -92,5 +93,21 @@ public class IPLAnalyser {
 		this.descendingOrderSort(runDataComparator, battingCSVList);
 		String sortedAvgRunsDataJson = new Gson().toJson(battingCSVList);
 		return sortedAvgRunsDataJson;
+	}
+
+	public List<BattingCSV> getStrikeRateWith4sAnd6sWiseSortedData() throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(battingCSVList);
+		int maxRunsFromAll4sAnd6s = battingCSVList.stream()
+				.map(battingRunsData -> (battingRunsData.fours * 4) + (battingRunsData.sixes * 6)).max(Integer::compare)
+				.get();
+		List<BattingCSV> batsmanListOfMaxRunsFromAll4sAnd6s = battingCSVList.stream().filter(
+				battingRunsData -> ((battingRunsData.fours * 4) + (battingRunsData.sixes * 6)) == maxRunsFromAll4sAnd6s)
+				.collect(Collectors.toList());
+		double MaxStrikeRateWith4sAnd6s = batsmanListOfMaxRunsFromAll4sAnd6s.stream()
+				.map(battingRunsData -> battingRunsData.strikeRate).max(Double::compare).get();
+		List<BattingCSV> batsmanListOfMaxStrikeWith4sAnd6s = batsmanListOfMaxRunsFromAll4sAnd6s.stream()
+				.filter(battingRunsData -> battingRunsData.strikeRate == MaxStrikeRateWith4sAnd6s)
+				.collect(Collectors.toList());
+		return batsmanListOfMaxStrikeWith4sAnd6s;
 	}
 }
