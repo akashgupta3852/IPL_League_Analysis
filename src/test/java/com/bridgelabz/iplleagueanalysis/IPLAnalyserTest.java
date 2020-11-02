@@ -129,7 +129,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
-	// UC1 - Getting the top batting average of the Cricketers
+	// UC1 - Getting the top batting average of the Cricketer
 	@Test
 	public void givenBattingCSVFile_WhenSortedByAvg_ShouldReturnSortedResult_CheckTopAvgRun()
 			throws IPLAnalyserException {
@@ -139,6 +139,7 @@ public class IPLAnalyserTest {
 			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunsData, BattingCSV[].class);
 			Assert.assertEquals(83.2, battingRunsCSV[0].avg, 0.00);
 		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -150,6 +151,19 @@ public class IPLAnalyserTest {
 			String sortedBattingRunByStrikeRate = iplAnalyser.getStrikeRateWiseSortedData();
 			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunByStrikeRate, BattingCSV[].class);
 			Assert.assertEquals(333.33, battingRunsCSV[0].strikeRate, 0.0);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// UC3.1 - Getting the the Cricketer who hits maximum 6s
+	@Test
+	public void givenMostRunCsvFile_whenSortedBySix_shouldReturnTopBatsman() {
+		try {
+			iplAnalyser.loadBattingData(IPL_MOST_RUNS_CSV_FILE_PATH);
+			String sortedMostRunByNumOfSix = iplAnalyser.getSixesWiseSortedData();
+			BattingCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByNumOfSix, BattingCSV[].class);
+			Assert.assertEquals("Andre Russell", mostRunsCSV[0].player);
 		} catch (IPLAnalyserException e) {
 			e.printStackTrace();
 		}
