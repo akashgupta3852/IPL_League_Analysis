@@ -207,6 +207,15 @@ public class IPLAnalyser {
 		return null;
 	}
 
+	public String getHundredsAndAvgRunsWiseSortedData() throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(battingCSVList);
+		Comparator<BattingCSV> battingCSVComparator = Comparator.comparing(battingCSV -> battingCSV.hundreds);
+		battingCSVComparator = battingCSVComparator.thenComparing(battingCSV -> battingCSV.avg);
+		this.descendingOrderSort(battingCSVComparator, battingCSVList);
+		String sortedJson = new Gson().toJson(battingCSVList);
+		return sortedJson;
+	}
+
 	private void getListSortedByAvgRunsOrWkts(List csvList) throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(csvList);
 		if (csvList == bowlingCSVList) {
