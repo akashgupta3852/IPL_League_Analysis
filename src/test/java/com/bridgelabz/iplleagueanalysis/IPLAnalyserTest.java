@@ -24,6 +24,7 @@ public class IPLAnalyserTest {
 		iplAnalyser = new IPLAnalyser();
 	}
 
+	// Returning the number of entries in the IPL_MOST_WICKETS_CSV_FILE
 	@Test
 	public void givenBowlingCSVFile_ShouldReturnExactCount() {
 		try {
@@ -61,6 +62,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
+	// Catching the exception for wrong file type of IPL_MOST_RUNS_CSV_FILE
 	@Test
 	public void givenBowlingCSVFile_WithWrongFileType_ShouldThrowException() {
 		try {
@@ -70,6 +72,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
+	// Returning the number of entries in the IPL_MOST_RUNS_CSV_FILE
 	@Test
 	public void givenBattingCSVFile_ShouldReturnExactCount() {
 		try {
@@ -80,6 +83,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
+	// Catching the exception when passing the incorrect file path of Batting CSV File
 	@Test
 	public void givenBattingCSVFile_WithWrongFile_ShouldThrowException() {
 		try {
@@ -89,6 +93,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
+	// Catching the exception when Batting CSV File has incorrect delimiter
 	@Test
 	public void givenBattingCSVFile_WithIncorrectDelimiter_ShouldThrowException() {
 		try {
@@ -98,6 +103,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
+	// Catching the exception when Batting CSV File has wrong header
 	@Test
 	public void givenBattingCSVFile_WithIncorrectHeader_ShouldThrowException() {
 		try {
@@ -107,6 +113,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
+	// Catching the exception when passing the wrong file type of Batting Data
 	@Test
 	public void givenBattingCSVFile_WithWrongFileType_ShouldThrowException() {
 		try {
@@ -116,8 +123,9 @@ public class IPLAnalyserTest {
 		}
 	}
 
+	// UC1 - Getting the top batting average of the Cricketers
 	@Test
-	public void givenBattingCSVFile_WhenSortedByAvg_ShouldReturnSortedResult_CheckHighestAvgRun()
+	public void givenBattingCSVFile_WhenSortedByAvg_ShouldReturnSortedResult_CheckTopAvgRun()
 			throws IPLAnalyserException {
 		try {
 			iplAnalyser.loadBattingData(IPL_MOST_RUNS_CSV_FILE_PATH);
@@ -125,6 +133,19 @@ public class IPLAnalyserTest {
 			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunsData, BattingCSV[].class);
 			Assert.assertEquals(83.2, battingRunsCSV[0].avg, 0.00);
 		} catch (IPLAnalyserException e) {
+		}
+	}
+
+	// UC2 - Getting the top striking rates of the Batsman
+	@Test
+	public void givenBattingCSVFile_WhenSortedByStrikingRate_ShouldReturnSortedResult_CheckTopStrikingRate() {
+		try {
+			iplAnalyser.loadBattingData(IPL_MOST_RUNS_CSV_FILE_PATH);
+			String sortedBattingRunByStrikeRate = iplAnalyser.getStrikingRateWiseSortedRunsData();
+			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunByStrikeRate, BattingCSV[].class);
+			Assert.assertEquals(333.33, battingRunsCSV[0].strikeRate, 0.0);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
 		}
 	}
 }
