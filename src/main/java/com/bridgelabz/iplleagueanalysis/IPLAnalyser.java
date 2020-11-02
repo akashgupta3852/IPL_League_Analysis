@@ -146,4 +146,12 @@ public class IPLAnalyser {
 		String sortedJson = new Gson().toJson(bowlingCSVList);
 		return sortedJson;
 	}
+
+	public String getEconomyRateWiseSortedBowlingData() throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(bowlingCSVList);
+		Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.economyRate);
+		this.descendingOrderSort(bowlingCSVComparator, bowlingCSVList);
+		String sortedJson = new Gson().toJson(bowlingCSVList);
+		return sortedJson;
+	}
 }
