@@ -113,7 +113,7 @@ public class IPLAnalyser {
 		return sortedJson;
 	}
 
-	public String getAvgAndStrikeRateWiseSortedData() throws IPLAnalyserException {
+	public String getAvgRunsAndStrikeRateWiseSortedData() throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(battingCSVList);
 		Comparator<BattingCSV> battingCSVComparator = Comparator.comparing(battingCSV -> battingCSV.avg);
 		battingCSVComparator = battingCSVComparator.thenComparing(battingCSV -> battingCSV.strikeRate);
@@ -165,6 +165,15 @@ public class IPLAnalyser {
 		Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.strikeRate);
 		this.descendingOrderSort(bowlingCSVComparator, bowlingCSVListWith4wAnd5w);
 		String sortedJson = new Gson().toJson(bowlingCSVListWith4wAnd5w);
+		return sortedJson;
+	}
+
+	public String getAvgWktsAndSRWiseSortedBowlingData() throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(bowlingCSVList);
+		Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.average);
+		bowlingCSVComparator = bowlingCSVComparator.thenComparing(bowlingCSV -> bowlingCSV.strikeRate);
+		this.descendingOrderSort(bowlingCSVComparator, bowlingCSVList);
+		String sortedJson = new Gson().toJson(bowlingCSVList);
 		return sortedJson;
 	}
 }
