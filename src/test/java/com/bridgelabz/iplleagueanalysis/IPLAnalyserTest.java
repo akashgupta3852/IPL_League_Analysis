@@ -19,12 +19,13 @@ public class IPLAnalyserTest {
 	private static final String INCORRECT_TYPE_MOST_RUNS_CSV_FILE = "C:\\Users\\Akash Gupta\\eclipse-workspace\\IPLLeagueAnalysis\\WP DP Data_01 IPL2019FactsheetMostRuns.txt";
 	private IPLAnalyser iplAnalyser;
 
+	// Initialising the iplAnalyser variable before every test cases
 	@Before
 	public void initialize() {
 		iplAnalyser = new IPLAnalyser();
 	}
 
-	// Returning the number of entries in the IPL_MOST_WICKETS_CSV_FILE
+	// Returning the exact number of entries in the Bowling CSV File
 	@Test
 	public void givenBowlingCSVFile_ShouldReturnExactCount() {
 		try {
@@ -35,6 +36,8 @@ public class IPLAnalyserTest {
 		}
 	}
 
+	// Catching the exception when passing the incorrect file path of Bowling CSV
+	// File
 	@Test
 	public void givenBowlingCSVFile_WithWrongFile_ShouldThrowException() {
 		try {
@@ -44,6 +47,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
+	// Catching the exception when Bowling CSV File has incorrect delimiter
 	@Test
 	public void givenBowlingCSVFile_WithIncorrectDelimiter_ShouldThrowException() {
 		try {
@@ -53,6 +57,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
+	// Catching the exception when Bowling CSV File has wrong header
 	@Test
 	public void givenBowlingCSVFile_WithIncorrectHeader_ShouldThrowException() {
 		try {
@@ -62,7 +67,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
-	// Catching the exception for wrong file type of IPL_MOST_RUNS_CSV_FILE
+	// // Catching the exception when passing the wrong file type of Bowling Data
 	@Test
 	public void givenBowlingCSVFile_WithWrongFileType_ShouldThrowException() {
 		try {
@@ -72,7 +77,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
-	// Returning the number of entries in the IPL_MOST_RUNS_CSV_FILE
+	// Returning the exact number of entries in the Batting CSV File
 	@Test
 	public void givenBattingCSVFile_ShouldReturnExactCount() {
 		try {
@@ -83,7 +88,8 @@ public class IPLAnalyserTest {
 		}
 	}
 
-	// Catching the exception when passing the incorrect file path of Batting CSV File
+	// Catching the exception when passing the incorrect file path of Batting CSV
+	// File
 	@Test
 	public void givenBattingCSVFile_WithWrongFile_ShouldThrowException() {
 		try {
@@ -141,7 +147,7 @@ public class IPLAnalyserTest {
 	public void givenBattingCSVFile_WhenSortedByStrikingRate_ShouldReturnSortedResult_CheckTopStrikingRate() {
 		try {
 			iplAnalyser.loadBattingData(IPL_MOST_RUNS_CSV_FILE_PATH);
-			String sortedBattingRunByStrikeRate = iplAnalyser.getStrikingRateWiseSortedRunsData();
+			String sortedBattingRunByStrikeRate = iplAnalyser.getStrikeRateWiseSortedData();
 			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunByStrikeRate, BattingCSV[].class);
 			Assert.assertEquals(333.33, battingRunsCSV[0].strikeRate, 0.0);
 		} catch (IPLAnalyserException e) {

@@ -69,4 +69,12 @@ public class IPLAnalyser {
 		if (battingCSVList == null || battingCSVList.size() == 0)
 			throw new IPLAnalyserException("No Runs Data", IPLAnalyserException.ExceptionType.NO_BATTING_DATA);
 	}
+
+	public String getStrikeRateWiseSortedData() throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(battingCSVList);
+		Comparator<BattingCSV> runDataComparator = Comparator.comparing(battingCSV -> battingCSV.strikeRate);
+		this.descendingOrderSort(runDataComparator, battingCSVList);
+		String sortedAvgRunsDataJson = new Gson().toJson(battingCSVList);
+		return sortedAvgRunsDataJson;
+	}
 }
