@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -152,6 +153,19 @@ public class IPLAnalyser {
 		Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.economyRate);
 		this.descendingOrderSort(bowlingCSVComparator, bowlingCSVList);
 		String sortedJson = new Gson().toJson(bowlingCSVList);
+		return sortedJson;
+	}
+
+	public String getStrikeRateWith4wAnd5wWiseSortedBowlingData() throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(bowlingCSVList);
+		List<BowlingCSV> bowlingCSVListWith4wAnd5w = new ArrayList<>();
+		for(BowlingCSV bowlingCSV:bowlingCSVList) {
+			if((bowlingCSV.fourWickets != 0 || bowlingCSV.fiveWickets != 0))
+				bowlingCSVListWith4wAnd5w.add(bowlingCSV);
+		}
+		Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.strikeRate);
+		this.descendingOrderSort(bowlingCSVComparator, bowlingCSVListWith4wAnd5w);
+		String sortedJson = new Gson().toJson(bowlingCSVListWith4wAnd5w);
 		return sortedJson;
 	}
 }
