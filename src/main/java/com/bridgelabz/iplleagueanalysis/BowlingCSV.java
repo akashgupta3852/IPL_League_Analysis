@@ -22,19 +22,19 @@ public class BowlingCSV {
 	public int runs;
 
 	@CsvBindByName(column = "Wkts", required = true)
-	public String wickets;
+	public int wickets;
 
 	@CsvBindByName(column = "BBI", required = true)
 	public double bbi;
 
 	@CsvBindByName(column = "Avg", required = true)
-	public String average;
+	public double average;
 
 	@CsvBindByName(column = "Econ", required = true)
 	public double economyRate;
 
 	@CsvBindByName(column = "SR", required = true)
-	public String strikeRate;
+	public double strikeRate;
 
 	@CsvBindByName(column = "4w", required = true)
 	public int fourWickets;
@@ -45,8 +45,8 @@ public class BowlingCSV {
 	public BowlingCSV() {
 	}
 
-	public BowlingCSV(String pos, String player, int match, int innings, double overs, int runs, String wickets,
-			double bbi, String average, double economyRate, String strikeRate, int fourWickets, int fiveWickets) {
+	public BowlingCSV(String pos, String player, int match, int innings, double overs, int runs, int wickets,
+			double bbi, double average, double economyRate, double strikeRate, int fourWickets, int fiveWickets) {
 		this.pos = pos;
 		this.player = player;
 		this.match = match;

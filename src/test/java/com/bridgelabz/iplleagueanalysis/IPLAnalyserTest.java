@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+
 public class IPLAnalyserTest {
 	private static final String IPL_MOST_WICKETS_CSV_FILE_PATH = "C:\\Users\\Akash Gupta\\Downloads\\WP DP Data_02 IPL2019FactsheetMostWkts.csv";
 	private static final String IPL_MOST_RUNS_CSV_FILE_PATH = "C:\\Users\\Akash Gupta\\Downloads\\WP DP Data_01 IPL2019FactsheetMostRuns.csv";
@@ -58,7 +60,7 @@ public class IPLAnalyserTest {
 			Assert.assertEquals("UNABLE_TO_PARSE", e.exceptionType);
 		}
 	}
-	
+
 	@Test
 	public void givenBowlingCSVFile_WithWrongFileType_ShouldThrowException() {
 		try {
@@ -104,13 +106,25 @@ public class IPLAnalyserTest {
 			Assert.assertEquals("UNABLE_TO_PARSE", e.exceptionType);
 		}
 	}
-	
+
 	@Test
 	public void givenBattingCSVFile_WithWrongFileType_ShouldThrowException() {
 		try {
 			iplAnalyser.loadBattingData(INCORRECT_TYPE_MOST_RUNS_CSV_FILE);
 		} catch (IPLAnalyserException e) {
 			Assert.assertEquals(IPLAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
+		}
+	}
+
+	@Test
+	public void givenBattingCSVFile_WhenSortedByAvg_ShouldReturnSortedResult_CheckHighestAvgRun()
+			throws IPLAnalyserException {
+		try {
+			iplAnalyser.loadBattingData(IPL_MOST_RUNS_CSV_FILE_PATH);
+			String sortedBattingRunsData = iplAnalyser.getAvgRunWiseSortedData();
+			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunsData, BattingCSV[].class);
+			Assert.assertEquals(83.2, battingRunsCSV[0].avg, 0.00);
+		} catch (IPLAnalyserException e) {
 		}
 	}
 }

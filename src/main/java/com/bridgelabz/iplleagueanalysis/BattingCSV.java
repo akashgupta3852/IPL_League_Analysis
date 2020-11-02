@@ -25,7 +25,7 @@ public class BattingCSV {
 	public String highScore;
 
 	@CsvBindByName(column = "Avg", required = true)
-	public String avg;
+	public double avg;
 
 	@CsvBindByName(column = "BF", required = true)
 	public int ballFaced;
@@ -48,7 +48,7 @@ public class BattingCSV {
 	public BattingCSV() {
 	}
 
-	public BattingCSV(String pos, String player, int match, int innings, int no, int runs, String highScore, String avg,
+	public BattingCSV(String pos, String player, int match, int innings, int no, int runs, String highScore, double avg,
 			int ballFaced, double strikeRate, int hundreds, int fiftys, int fours, int sixes) {
 		this.pos = pos;
 		this.player = player;
