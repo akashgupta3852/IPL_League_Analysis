@@ -46,8 +46,7 @@ public class IPLAnalyser {
 	}
 
 	public String getAvgRunWiseSortedData() throws IPLAnalyserException {
-		checkCSVListNullOrEmpty(battingCSVList);
-		getListSortedByAvg(battingCSVList);
+		getListSortedByAvgRunsOrWkts(battingCSVList);
 		String sortedJson = new Gson().toJson(battingCSVList);
 		return sortedJson;
 	}
@@ -130,7 +129,7 @@ public class IPLAnalyser {
 	}
 
 	public String getAvgWicketsWiseSortedData() throws IPLAnalyserException {
-		getListSortedByAvg(bowlingCSVList);
+		getListSortedByAvgRunsOrWkts(bowlingCSVList);
 		String sortedJson = new Gson().toJson(bowlingCSVList);
 		return sortedJson;
 	}
@@ -183,8 +182,8 @@ public class IPLAnalyser {
 	}
 
 	public String getPlayerWithBestAverage() throws IPLAnalyserException {
-		getListSortedByAvg(bowlingCSVList);
-		getListSortedByAvg(battingCSVList);
+		getListSortedByAvgRunsOrWkts(bowlingCSVList);
+		getListSortedByAvgRunsOrWkts(battingCSVList);
 		for (BattingCSV battingCSV : battingCSVList) {
 			for (BowlingCSV bowlingCSV : bowlingCSVList) {
 				if (battingCSV.player.equals(bowlingCSV.player)) {
@@ -192,16 +191,40 @@ public class IPLAnalyser {
 				}
 			}
 		}
-		return "";
+		return null;
 	}
 
-	private void getListSortedByAvg(List csvList) throws IPLAnalyserException {
+	public String getPlayerHavingMostRunsAndMostWkts() throws IPLAnalyserException {
+		getListSortedByMaxRunsOrWkts(bowlingCSVList);
+		getListSortedByMaxRunsOrWkts(battingCSVList);
+		for (BattingCSV battingCSV : battingCSVList) {
+			for (BowlingCSV bowlingCSV : bowlingCSVList) {
+				if (battingCSV.player.equals(bowlingCSV.player)) {
+					return battingCSV.player;
+				}
+			}
+		}
+		return null;
+	}
+
+	private void getListSortedByAvgRunsOrWkts(List csvList) throws IPLAnalyserException {
 		checkCSVListNullOrEmpty(csvList);
 		if (csvList == bowlingCSVList) {
 			Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.average);
 			this.descendingOrderSort(bowlingCSVComparator, csvList);
 		} else {
 			Comparator<BattingCSV> battingCSVComparator = Comparator.comparing(battingCSV -> battingCSV.avg);
+			this.descendingOrderSort(battingCSVComparator, csvList);
+		}
+	}
+
+	private void getListSortedByMaxRunsOrWkts(List csvList) throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(csvList);
+		if (csvList == bowlingCSVList) {
+			Comparator<BowlingCSV> bowlingCSVComparator = Comparator.comparing(bowlingCSV -> bowlingCSV.wickets);
+			this.descendingOrderSort(bowlingCSVComparator, csvList);
+		} else {
+			Comparator<BattingCSV> battingCSVComparator = Comparator.comparing(battingCSV -> battingCSV.runs);
 			this.descendingOrderSort(battingCSVComparator, csvList);
 		}
 	}
