@@ -77,4 +77,12 @@ public class IPLAnalyser {
 		String sortedAvgRunsDataJson = new Gson().toJson(battingCSVList);
 		return sortedAvgRunsDataJson;
 	}
+
+	public String getSixesWiseSortedData() throws IPLAnalyserException {
+		checkCSVListNullOrEmpty(battingCSVList);
+		Comparator<BattingCSV> runDataComparator = Comparator.comparing(battingCSV -> battingCSV.sixes);
+		this.descendingOrderSort(runDataComparator, battingCSVList);
+		String sortedAvgRunsDataJson = new Gson().toJson(battingCSVList);
+		return sortedAvgRunsDataJson;
+	}
 }
