@@ -302,12 +302,25 @@ public class IPLAnalyserTest {
 	
 	// UC13 - Getting the player who had the best batting and bowling averages
 	@Test
-	public void givenBattingAndBowlingCSVFile_WhenRetrievedBestAverage_ShouldMatch() {
+	public void givenBattingAndBowlingCSVFile_WhenRetrieved_ShouldReturnBestAveragePlayer() {
 		try {
 			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
 			iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_PATH);
 			String playerWithBestAverage = iplAnalyser.getPlayerWithBestAverage();
 			Assert.assertEquals("Andre Russell", playerWithBestAverage);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// UC14 Getting the player who is the best all rounder
+	@Test
+	public void givenBattingAndBowlingCSVFile_WhenRetrieved_ShouldReturnAllRounderPlayer() {
+		try {
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
+			iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_PATH);
+			String allRounderPlayer = iplAnalyser.getPlayerHavingMostRunsAndMostWkts();
+			Assert.assertEquals("Andre Russell", allRounderPlayer);
 		} catch (IPLAnalyserException e) {
 			e.printStackTrace();
 		}
