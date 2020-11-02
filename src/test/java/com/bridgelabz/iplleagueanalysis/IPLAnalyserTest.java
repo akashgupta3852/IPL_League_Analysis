@@ -245,4 +245,17 @@ public class IPLAnalyserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	// UC9 - Getting the Bowler who had the best economy rate
+	@Test
+	public void givenBowlingCSVFile_WhenSortedByEconomyRate_ShouldReturnSortedResult_CheckTopBowler() {
+		try {
+			iplAnalyser.loadBowlingData(BOWLING_CSV_FILE_PATH);
+			String sortedBowlingCSVByEconomyRate = iplAnalyser.getEconomyRateWiseSortedBowlingData();
+			BowlingCSV[] bowlingCSV = new Gson().fromJson(sortedBowlingCSVByEconomyRate, BowlingCSV[].class);
+			Assert.assertEquals("Ben Cutting", bowlingCSV[0].player);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
 }
