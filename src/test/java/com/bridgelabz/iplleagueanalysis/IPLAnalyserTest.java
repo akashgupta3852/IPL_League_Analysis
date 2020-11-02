@@ -1,5 +1,7 @@
 package com.bridgelabz.iplleagueanalysis;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -156,7 +158,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
-	// UC3.1 - Getting the the Cricketer who hits maximum 6s
+	// UC3.1 - Getting the Cricketer who hits maximum 6s
 	@Test
 	public void givenBattingCSVFile_WhenSortedBySixes_ShouldReturnSortedResult_CheckTopBatsman() {
 		try {
@@ -169,7 +171,7 @@ public class IPLAnalyserTest {
 		}
 	}
 
-	// UC3.2 - Getting the the Cricketer who hits maximum 4s
+	// UC3.2 - Getting the Cricketer who hits maximum 4s
 	@Test
 	public void givenBattingCSVFile_WhenSortedByFours_ShouldReturnSortedResult_CheckTopBatsman() {
 		try {
@@ -177,6 +179,18 @@ public class IPLAnalyserTest {
 			String sortedBattingRunsByNumOfFours = iplAnalyser.getFoursWiseSortedData();
 			BattingCSV[] battingRunsCSV = new Gson().fromJson(sortedBattingRunsByNumOfFours, BattingCSV[].class);
 			Assert.assertEquals("Shikhar Dhawan", battingRunsCSV[0].player);
+		} catch (IPLAnalyserException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// UC4 - Getting the Cricketer who had best striking rates with 6s and 4s
+	@Test
+	public void givenBattingCSVFile_WhenSortedByStrikeRateWithFoursAndSixes_ShouldReturnSortedResult_CheckTopBatsman() {
+		try {
+			iplAnalyser.loadBattingData(BATTING_CSV_FILE_PATH);
+			List<BattingCSV> sortedMostRunByNumOfFour = iplAnalyser.getStrikeRateWith4sAnd6sWiseSortedData();
+			Assert.assertEquals("Andre Russell", sortedMostRunByNumOfFour.get(0).player);
 		} catch (IPLAnalyserException e) {
 			e.printStackTrace();
 		}
